@@ -61,7 +61,7 @@ app.post('/send',(req,res)=>{
                     message: ${req.body.message}
                     `;
         const info = await transporter.sendMail({
-          from: '"example 👻" <example@gmail.com>', // sender address
+          from: `"example 👻" email: ${req.body.email}`, // sender address
           to: "expample@gmail.com", // list of receivers
           subject: "Hello ✔", // Subject line
           text: "Hello world?", // plain text body
