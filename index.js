@@ -1,9 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const {engine} = require('express-handlebars')
+const session = require('express-session');
+
 // const exphbs = require('express-handlebars')
 // const path = require('path')
 const nodemailer = require('nodemailer')
+const flash = require('connect-flash')
 
 
 const app = express()
@@ -19,8 +22,20 @@ app.use(express.static('public'));
 // app.use('/public',express.static(path.join(__dirname, 'public')))
 app.set('views', './views');
 
+// setup session 
+app.use(session({
+  secret: 'your-secret-key',
+  resave: true,
+  saveUninitialized: true
+}));
+
+// using flash for messages
+app.use(flash());
+
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+
+
 
 app.post('/send',(req,res)=>{
     // console.log(req.body);
@@ -32,7 +47,7 @@ app.post('/send',(req,res)=>{
         auth: {
           // TODO: replace `user` and `pass` values from <https://forwardemail.net>
           user: 'example@gmail.com',
-          pass: 'password'
+          pass: 'app password in gmail'
         }
       });
       
@@ -46,14 +61,20 @@ app.post('/send',(req,res)=>{
                     message: ${req.body.message}
                     `;
         const info = await transporter.sendMail({
-          from: '"kemobyte 👻" <kamalkafi12@gmail.com>', // sender address
-          to: "kemokafu@gmail.com, kamalkafi12@gmail.com", // list of receivers
+          from: '"example 👻" <example@gmail.com>', // sender address
+          to: "expample@gmail.com", // list of receivers
           subject: "Hello ✔", // Subject line
           text: "Hello world?", // plain text body
           html: message, // html body
         });
-      
-        console.log("Message sent: %s", info.messageId);
+      msg = 'Message Sent Successfully !';
+      req.flash('success', msg); 
+             // console.log("Message sent: %s", info.messageId);
+             const formData = req.body; // Access the entire form data
+             req.flash('formData', formData);
+
+        res.redirect('/contact')
+
         // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
       
         //
@@ -63,12 +84,20 @@ app.post('/send',(req,res)=>{
         //
       }
       
-      main().catch(console.error);
+      main().catch(()=>{
+        msg = 'Faild ! try again later';
+        req.flash('error', msg);
+        const formData = req.body; // Access the entire form data
+             req.flash('formData', formData);
+        res.redirect('/contact')
+      });
 
 })
 
 app.get('/contact',(req,res)=>{
-    res.render('contact')
+  const formData = req.flash('formData')[0]; // Retrieve the flash data
+
+    res.render('contact', { formData,successMessage: req.flash('success'), errorMessage: req.flash('error') })
 })
 
 app.listen(5000,()=>{
