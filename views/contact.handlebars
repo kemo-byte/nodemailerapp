@@ -1,0 +1,49 @@
+<!-- Start Form -->
+
+<div class="container">
+    <h1 class="text-center">Contact Me</h1>
+    <form class="contact-form" action="/send" method="POST">
+    {{msg}}
+        <div class="form-group">
+            <input class="username form-control" type="text" name="username" placeholder="Type Your Username"
+                value="" />
+            <i class="fa fa-user fa-fw"></i>
+            <span class="asterisx">*</span>
+            <div class="alert alert-danger custom-alert">
+                Username Must Be Larger Than <strong>3</strong> Characters
+            </div>
+        </div>
+        <div class="form-group">
+            <input class="email form-control" type="email" name="email" placeholder="Please Type a Valid Email"
+                value="" />
+            <i class="fa fa-envelope fa-fw"></i>
+            <span class="asterisx">*</span>
+            <div class="alert alert-danger custom-alert">
+                Email Can't Be <strong>Empty</strong>
+            </div>
+        </div>
+        <input class="form-control" type="text" name="cellphone" placeholder="Type Your Cell Phone" value="" />
+        <i class="fa fa-phone fa-fw"></i>
+        <div class="form-group">
+            <textarea class="message form-control" name="message" placeholder="Your Message!"></textarea>
+            <span class="asterisx">*</span>
+            <div class="alert alert-danger custom-alert">
+                Message Can\'t Be Less Than <strong>10</strong> Characters
+            </div>
+        </div>
+        <div class="form-group">
+            {{!--
+            <?php echo isset($recaptchaError)? '<span class="alert alert-danger custom-alert"> Error '.$recaptchaError.'</span>':''; ?>
+            --}}
+        </div>
+        <div class="form-group">
+            {{!-- <div class="g-recaptcha" data-sitekey="6LetwdgeAAAAAPBnEGcVvZQ30rAvcmIXWLbNmVCe"></div>
+        </div> --}}
+
+        <!-- 6LetwdgeAAAAAG18vTb-rmrBqVixVx-IsCKyTE-C -->
+        <input class="btn btn-success" type="submit" value="Send Message" />
+        <i class="fa fa-send fa-fw send-icon"></i>
+    </form>
+</div>
+
+<!-- End Form -->
