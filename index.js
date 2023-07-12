@@ -39,7 +39,42 @@ app.use(bodyParser.json())
 
 app.post('/send',(req,res)=>{
     // console.log(req.body);
-    
+  
+    if(!req.body.username) {
+      res.status(400)
+      msg = 'username is required !';
+      req.flash('error', msg);
+      const formData = req.body; // Access the entire form data
+           req.flash('formData', formData);
+      res.redirect('/contact')  }
+
+  else if(!req.body.email) {
+    res.status(400)
+      msg = 'email is required !';
+      req.flash('error', msg);
+      const formData = req.body; // Access the entire form data
+           req.flash('formData', formData);
+      res.redirect('/contact')  
+}
+
+else if(!req.body.cellphone) {
+  res.status(400)
+      msg = 'cellphone is required !';
+      req.flash('error', msg);
+      const formData = req.body; // Access the entire form data
+           req.flash('formData', formData);
+      res.redirect('/contact')  
+}
+
+else if(!req.body.message) {
+  // res.status(400)
+      msg = 'message is required !';
+      req.flash('error', msg);
+      const formData = req.body; // Access the entire form data
+           req.flash('formData', formData);
+      res.redirect('/contact')  
+} else {
+
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -47,7 +82,7 @@ app.post('/send',(req,res)=>{
         auth: {
           // TODO: replace `user` and `pass` values from <https://forwardemail.net>
           user: 'example@gmail.com',
-          pass: 'app password in gmail'
+          pass: 'app password'
         }
       });
       
@@ -61,7 +96,7 @@ app.post('/send',(req,res)=>{
                     message: ${req.body.message}
                     `;
         const info = await transporter.sendMail({
-          from: `"example 👻" email: ${req.body.email}`, // sender address
+          from: `"${req.body.username} 👻" ${req.body.email}`, // sender address
           to: "expample@gmail.com", // list of receivers
           subject: "Hello ✔", // Subject line
           text: "Hello world?", // plain text body
@@ -91,7 +126,7 @@ app.post('/send',(req,res)=>{
              req.flash('formData', formData);
         res.redirect('/contact')
       });
-
+    }
 })
 
 app.get('/contact',(req,res)=>{
