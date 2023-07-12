@@ -1,9 +1,9 @@
 # nodemailerapp
 nodejs app with handlebars template engine for sending mail using nodemailer 
 
-# using
+## using
 after clone the project 
-``` npm install
+``` npm install ```
 
  ### create app password in your gmail account 
 
@@ -14,3 +14,4 @@ after clone the project
 pass: 'app password from gmail' 
 
 to: 'example@gmail.com' 
+```
