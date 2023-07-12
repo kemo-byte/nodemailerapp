@@ -3,11 +3,11 @@ nodejs app with handlebars template engine for sending mail using nodemailer
 
 # using
 after clone the project 
-(npm install) 
+``` npm install
 
- create app password in your gmail account 
+ ### create app password in your gmail account 
 
-add your gmail account data in /send route 
+### add your gmail account data in /send route 
 
 ```
  user: 'example@gmail.com',
